@@ -58,7 +58,7 @@ export function ReportView({
                   <table className="compact-table">
                     <thead>
                       <tr>
-                        <th>Závodník klubu</th>
+                        <th>Jméno</th>
                         <th>Poř.</th>
                         <th>Čas</th>
                         <th>Ztráta</th>
