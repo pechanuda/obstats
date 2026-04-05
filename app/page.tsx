@@ -78,7 +78,7 @@ export default async function Page({
           selectedSport={selectedSport}
           selectedLevel={selectedLevel}
           years={yearOptions}
-          submitLabel="Načíst závody"
+          submitLabel="Filtrovat závody"
         />
 
         <section className="summary summary-inline">
