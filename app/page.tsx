@@ -60,7 +60,7 @@ export default async function Page({
     <main className="page">
       <section className="panel intro-panel">
         <section className="hero hero-card">
-          <h1>ORIS Report závodu</h1>
+          <h1>KOBUL - výsledkový výcuc z ORISu</h1>
           <p>
             Procházej závody podle vybraného klubu a filtrů. Kliknutí na závod otevře
             samostatnou stránku reportu se seskupenými výsledky kategorií a možností tisku do PDF.

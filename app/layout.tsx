@@ -3,8 +3,8 @@ import type { Metadata } from "next";
 import { ReactNode } from "react";
 
 export const metadata: Metadata = {
-  title: "ORIS Report závodu",
-  description: "Jednoduchý report závodu z ORISu",
+  title: "KOBUL - výsledkový výcuc z ORISu",
+  description: "Jednoduchý výsledkový výcuc z ORISu pro KOBUL",
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {

@@ -1,4 +1,4 @@
-# ORIS Report závodu
+# KOBUL - výsledkový výcuc z ORISu
 
 Jednoduchá Next.js aplikace nad ORIS API pro:
 

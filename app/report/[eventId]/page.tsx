@@ -71,7 +71,7 @@ export default async function ReportPage({
     <main className="page">
       <section className="panel intro-panel">
         <section className="hero hero-card">
-          <h1>ORIS Report závodu</h1>
+          <h1>KOBUL - výsledkový výcuc z ORISu</h1>
           <p>Report vybraného závodu seskupený podle kategorií pro zvolený klub.</p>
         </section>
 

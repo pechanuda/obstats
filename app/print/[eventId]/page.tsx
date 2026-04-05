@@ -33,7 +33,7 @@ export default async function PrintPage({
   return (
     <>
       <AutoPrint />
-      <PrintReportPage report={report} title="Report závodu" />
+      <PrintReportPage report={report} title="KOBUL - výsledkový výcuc z ORISu" />
     </>
   );
 }
