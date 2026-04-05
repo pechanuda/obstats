@@ -1,5 +1,5 @@
-import Link from "next/link";
 import { FilterForm } from "../components/filter-form";
+import { RaceTable } from "../components/race-table";
 import { firstValue, monthOptions } from "../lib/filters";
 import {
   getClubOptions,
@@ -108,45 +108,23 @@ export default async function Page({
         {events.length === 0 ? (
           <p className="empty-state">ORIS pro vybraný měsíc nevrátil žádné závody.</p>
         ) : (
-          <div className="table-wrap">
-            <table className="compact-table">
-              <thead>
-                <tr>
-                  <th>Datum</th>
-                  <th>Závod</th>
-                  <th>Pořadatel</th>
-                  <th>ORIS</th>
-                </tr>
-              </thead>
-              <tbody>
-                {events.map((event) => (
-                  <tr
-                    key={event.id}
-                    className={event.date === today ? "table-row--today" : undefined}
-                  >
-                    <td className="table-date">{event.date}</td>
-                    <td>
-                      <Link
-                        className="table-link"
-                        href={buildRaceHref(
-                          event.id,
-                          selectedYear,
-                          selectedMonth,
-                          selectedClub,
-                          selectedSport,
-                          selectedLevel,
-                        )}
-                      >
-                        {event.name}
-                      </Link>
-                    </td>
-                    <td>{event.organizer || "N/A"}</td>
-                    <td>{event.id}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+          <RaceTable
+            rows={events.map((event) => ({
+              id: event.id,
+              date: event.date,
+              name: event.name,
+              organizer: event.organizer,
+              href: buildRaceHref(
+                event.id,
+                selectedYear,
+                selectedMonth,
+                selectedClub,
+                selectedSport,
+                selectedLevel,
+              ),
+              isToday: event.date === today,
+            }))}
+          />
         )}
       </section>
     </main>

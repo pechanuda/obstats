@@ -301,6 +301,52 @@ td strong {
   color: var(--muted);
 }
 
+.login-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.login-panel {
+  width: min(460px, 100%);
+  padding: 24px;
+}
+
+.login-panel h1 {
+  margin: 0 0 10px;
+  font-size: 2rem;
+  line-height: 1.05;
+}
+
+.login-panel p {
+  margin: 0 0 18px;
+  color: var(--muted);
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.login-input {
+  width: 100%;
+  min-height: 42px;
+  padding: 0 12px;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--text);
+  font: inherit;
+}
+
+.login-error {
+  margin: 0;
+  color: #a12a18;
+}
+
 .print-group {
   margin-bottom: 10px;
 }
@@ -343,10 +389,25 @@ td strong {
   color: var(--text);
   text-decoration: none;
   font-weight: 600;
+  display: inline-block;
+  padding: 2px 0;
 }
 
 .table-link:hover {
   color: var(--accent);
+}
+
+.compact-table tbody tr {
+  transition: background-color 120ms ease;
+}
+
+.clickable-row {
+  cursor: pointer;
+}
+
+.compact-table tbody tr:hover td,
+.clickable-row:focus td {
+  background: rgba(255, 243, 239, 0.7);
 }
 
 .category-card table {
@@ -389,6 +450,52 @@ td strong {
   .actions {
     flex-direction: column;
     align-items: stretch;
+  }
+
+  .report,
+  .summary,
+  .intro-panel {
+    padding: 12px;
+  }
+
+  .category-card {
+    padding: 8px 10px;
+  }
+
+  .category-meta {
+    font-size: 0.84rem;
+    line-height: 1.15;
+  }
+
+  table {
+    min-width: 0;
+  }
+
+  th,
+  td {
+    padding: 4px 3px;
+    font-size: 0.8rem;
+  }
+
+  .compact-table th,
+  .compact-table td {
+    padding: 4px 3px;
+  }
+
+  .category-card table th:first-child,
+  .category-card table td:first-child {
+    width: 48%;
+  }
+
+  .category-card table th:nth-child(2),
+  .category-card table td:nth-child(2),
+  .category-card table th:nth-child(3),
+  .category-card table td:nth-child(3),
+  .category-card table th:nth-child(4),
+  .category-card table td:nth-child(4),
+  .category-card table th:nth-child(5),
+  .category-card table td:nth-child(5) {
+    white-space: nowrap;
   }
 }
 

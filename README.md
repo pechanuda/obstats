@@ -41,9 +41,21 @@ npm run build
 npm run start
 ```
 
+Pro přihlášení je potřeba nastavit:
+
+```bash
+APP_PASSWORD=...
+APP_SESSION_SECRET=...
+```
+
 ## Nasazení na Vercel
 
 Projekt je standardní Next.js aplikace a může být nasazen přímo z GitHubu na Vercel bez speciální konfigurace.
+
+Na Vercelu je potřeba doplnit environment variables:
+
+- `APP_PASSWORD`
+- `APP_SESSION_SECRET`
 
 ## Poznámky
 

@@ -1,6 +1,9 @@
 const ORIS_API_URL = "https://oris.ceskyorientak.cz/API/";
 const OB_SPORT_ID = "1";
 const ALL_RACES = "1";
+const CLUB_LABEL_OVERRIDES: Record<string, string> = {
+  "73": "KOBUL",
+};
 
 export type ClubOption = {
   id: string;
@@ -232,6 +235,10 @@ function normalizeLossTime(loss: string | null | undefined) {
   return loss.replace(/^\+\s*/, "");
 }
 
+function getClubDisplayName(clubId: string, fallback: string) {
+  return CLUB_LABEL_OVERRIDES[clubId] ?? fallback;
+}
+
 function isNonTimeResult(time: string | null | undefined) {
   if (!time) {
     return true;
@@ -396,7 +403,10 @@ export async function getRaceReport(eventId: string, clubId: string): Promise<Ra
 
           return {
             runnerName: row.Name,
-            runnerClub: row.ClubNameResults || row.RegNo?.slice(0, 3) || "",
+            runnerClub: getClubDisplayName(
+              row.ClubID,
+              row.ClubNameResults || row.RegNo?.slice(0, 3) || "",
+            ),
             place: normalizePlace(row.Place),
             runnerTime: row.Time || null,
             lossTime:
