@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import { AutoPrint } from "../../../components/auto-print";
 import { PrintReportPage } from "../../../components/print-report-page";
-import { getRaceReport } from "../../../lib/oris";
-import { firstValue } from "../../../lib/filters";
+import { FIXED_CLUB_ID, getRaceReport } from "../../../lib/oris";
 
 export async function generateMetadata({
   params,
@@ -20,15 +19,11 @@ export async function generateMetadata({
 
 export default async function PrintPage({
   params,
-  searchParams,
 }: {
   params: Promise<{ eventId: string }>;
-  searchParams: Promise<Record<string, string | string[] | undefined>>;
 }) {
   const routeParams = await params;
-  const query = await searchParams;
-  const clubId = firstValue(query.club) ?? "73";
-  const report = await getRaceReport(routeParams.eventId, clubId);
+  const report = await getRaceReport(routeParams.eventId, FIXED_CLUB_ID);
 
   return (
     <>

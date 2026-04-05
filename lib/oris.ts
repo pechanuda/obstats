@@ -1,14 +1,10 @@
 const ORIS_API_URL = "https://oris.ceskyorientak.cz/API/";
+export const FIXED_CLUB_ID = "73";
 const OB_SPORT_ID = "1";
 const ALL_RACES = "1";
+const ORIS_CACHE_TTL = 86400;
 const CLUB_LABEL_OVERRIDES: Record<string, string> = {
-  "73": "KOBUL",
-};
-
-export type ClubOption = {
-  id: string;
-  abbr: string;
-  name: string;
+  [FIXED_CLUB_ID]: "KOBUL",
 };
 
 export type EventOption = {
@@ -17,16 +13,6 @@ export type EventOption = {
   date: string;
   status: string;
   organizer: string;
-};
-
-export type SportOption = {
-  id: string;
-  label: string;
-};
-
-export type LevelOption = {
-  id: string;
-  label: string;
 };
 
 export type RaceReportRow = {
@@ -81,19 +67,6 @@ type EventRecord = {
     NameCZ?: string;
     NameEN?: string;
   };
-};
-
-type ListRecord = {
-  ID: string;
-  Description_CZ?: string;
-  Description_EN?: string;
-  Name?: string;
-};
-
-type ClubRecord = {
-  ID: string;
-  Name: string;
-  Abbr: string;
 };
 
 type ResultRecord = {
@@ -170,7 +143,7 @@ async function hasUsableClubResults(eventId: string, clubId: string) {
       eventid: eventId,
       clubid: clubId,
     },
-    300,
+    ORIS_CACHE_TTL,
   );
 
   return Object.values(data).some((row) => {
@@ -247,70 +220,17 @@ function isNonTimeResult(time: string | null | undefined) {
   return !/^\d{1,2}:\d{2}(:\d{2})?$/.test(time.trim());
 }
 
-export async function getClubOptions() {
-  const data = await fetchOris<Record<string, ClubRecord>>(
-    { method: "getCSOSClubList" },
-    86400,
-  );
-
-  return Object.values(data)
-    .map((club) => ({
-      id: club.ID,
-      abbr: club.Abbr,
-      name: club.Name,
-    }))
-    .sort((a, b) => a.abbr.localeCompare(b.abbr, "cs"));
-}
-
-export async function getSportOptions() {
-  const data = await fetchOris<Record<string, ListRecord>>(
-    { method: "getList", list: "sport" },
-    86400,
-  );
-
-  return Object.values(data)
-    .map((item) => ({
-      id: item.ID,
-      label: item.Description_CZ || item.Description_EN || item.ID,
-    }))
-    .sort((a, b) => a.id.localeCompare(b.id, "cs"));
-}
-
-export async function getLevelOptions() {
-  const data = await fetchOris<Record<string, ListRecord>>(
-    { method: "getList", list: "level" },
-    86400,
-  );
-
-  return Object.values(data)
-    .map((item) => ({
-      id: item.ID,
-      label: item.Description_CZ || item.Name || item.ID,
-    }))
-    .sort((a, b) => a.label.localeCompare(b.label, "cs"));
-}
-
-export async function getEventOptions(
-  year: number,
-  month: number,
-  sport: string,
-  level: string,
-  clubId?: string,
-) {
+export async function getEventOptions(year: number, month: number) {
   const { start, end } = monthDateRange(year, month);
   const params: Record<string, string> = {
     method: "getEventList",
     datefrom: start,
     dateto: end,
-    sport: sport || OB_SPORT_ID,
+    sport: OB_SPORT_ID,
     all: ALL_RACES,
   };
 
-  if (level && level !== "all") {
-    params.level = level;
-  }
-
-  const data = await fetchOris<Record<string, EventRecord>>(params);
+  const data = await fetchOris<Record<string, EventRecord>>(params, ORIS_CACHE_TTL);
 
   const filteredEvents = Object.values(data)
     .filter((event) => event.Status === "R")
@@ -324,14 +244,10 @@ export async function getEventOptions(
     }))
     .sort((a, b) => `${a.date}-${a.name}`.localeCompare(`${b.date}-${b.name}`, "cs"));
 
-  if (!clubId) {
-    return filteredEvents;
-  }
-
   const clubMatches = await Promise.all(
     filteredEvents.map(async (event) => ({
       event,
-      hasResults: await hasUsableClubResults(event.id, clubId),
+      hasResults: await hasUsableClubResults(event.id, FIXED_CLUB_ID),
     })),
   );
 
@@ -340,11 +256,11 @@ export async function getEventOptions(
 
 export async function getRaceReport(eventId: string, clubId: string): Promise<RaceReport> {
   const [eventDetail, results] = await Promise.all([
-    fetchOris<EventDetailRecord>({ method: "getEvent", id: eventId }),
+    fetchOris<EventDetailRecord>({ method: "getEvent", id: eventId }, ORIS_CACHE_TTL),
     fetchOris<Record<string, ResultRecord>>({
       method: "getEventResults",
       eventid: eventId,
-    }),
+    }, ORIS_CACHE_TTL),
   ]);
 
   const allRows = Object.values(results);

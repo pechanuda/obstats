@@ -1,5 +1,4 @@
 export const monthOptions = [
-  { value: 0, label: "Celý rok" },
   { value: 1, label: "Leden" },
   { value: 2, label: "Únor" },
   { value: 3, label: "Březen" },

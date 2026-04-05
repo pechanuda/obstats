@@ -1,30 +1,14 @@
 import { FilterForm } from "../components/filter-form";
 import { RaceTable } from "../components/race-table";
 import { firstValue, monthOptions } from "../lib/filters";
-import {
-  getClubOptions,
-  getCurrentFilters,
-  getEventOptions,
-  getLevelOptions,
-  getSportOptions,
-} from "../lib/oris";
+import { getCurrentFilters, getEventOptions } from "../lib/oris";
 
 type SearchParams = Promise<Record<string, string | string[] | undefined>>;
 
-function buildRaceHref(
-  eventId: string,
-  selectedYear: number,
-  selectedMonth: number,
-  selectedClub: string,
-  selectedSport: string,
-  selectedLevel: string,
-) {
+function buildRaceHref(eventId: string, selectedYear: number, selectedMonth: number) {
   const params = new URLSearchParams({
     year: String(selectedYear),
     month: String(selectedMonth),
-    club: selectedClub,
-    sport: selectedSport,
-    level: selectedLevel,
   });
 
   return `/report/${eventId}?${params.toString()}`;
@@ -40,19 +24,8 @@ export default async function Page({
 
   const selectedYear = Number(firstValue(params.year) ?? current.year);
   const selectedMonth = Number(firstValue(params.month) ?? current.month);
-  const selectedClub = firstValue(params.club) ?? "73";
-  const selectedSport = firstValue(params.sport) ?? "1";
-  const selectedLevel = firstValue(params.level) ?? "all";
 
-  const [clubs, sports, levels, events] = await Promise.all([
-    getClubOptions(),
-    getSportOptions(),
-    getLevelOptions(),
-    getEventOptions(selectedYear, selectedMonth, selectedSport, selectedLevel, selectedClub),
-  ]);
-
-  const selectedClubOption = clubs.find((club) => club.id === selectedClub);
-  const selectedSportOption = sports.find((sport) => sport.id === selectedSport);
+  const events = await getEventOptions(selectedYear, selectedMonth);
   const yearOptions = Array.from({ length: 4 }, (_, index) => current.year - 1 + index);
   const today = new Date().toISOString().slice(0, 10);
 
@@ -62,21 +35,15 @@ export default async function Page({
         <section className="hero hero-card">
           <h1>KOBUL - výsledkový výcuc z ORISu</h1>
           <p>
-            Procházej závody podle vybraného klubu a filtrů. Kliknutí na závod otevře
-            samostatnou stránku reportu se seskupenými výsledky kategorií a možností tisku do PDF.
+            Procházej orientační závody s výsledky pro KOBUL. Kliknutí na závod otevře samostatnou
+            stránku reportu se seskupenými výsledky kategorií a možností tisku do PDF.
           </p>
         </section>
 
         <FilterForm
           action="/"
-          clubs={clubs}
-          sports={sports}
-          levels={levels}
-          selectedClub={selectedClub}
           selectedYear={selectedYear}
           selectedMonth={selectedMonth}
-          selectedSport={selectedSport}
-          selectedLevel={selectedLevel}
           years={yearOptions}
           submitLabel="Filtrovat závody"
         />
@@ -84,16 +51,16 @@ export default async function Page({
         <section className="summary summary-inline">
           <h2>Aktuální filtry</h2>
           <p>
-            Klub: <strong>{selectedClubOption?.abbr ?? selectedClub}</strong>
+            Klub: <strong>KOBUL</strong>
             {" · "}
             Rok: <strong>{selectedYear}</strong>
             {" · "}
             Měsíc:{" "}
             <strong>{monthOptions.find((item) => item.value === selectedMonth)?.label}</strong>
             {" · "}
-            Sport: <strong>{selectedSportOption?.label ?? selectedSport}</strong>
+            Sport: <strong>OB</strong>
             {" · "}
-            Typ závodu: <strong>{selectedLevel === "all" ? "Všechny závody" : selectedLevel}</strong>
+            Typ závodu: <strong>Všechny závody</strong>
             {" · "}
             Nalezeno závodů: <strong>{events.length}</strong>
           </p>
@@ -114,14 +81,7 @@ export default async function Page({
               date: event.date,
               name: event.name,
               organizer: event.organizer,
-              href: buildRaceHref(
-                event.id,
-                selectedYear,
-                selectedMonth,
-                selectedClub,
-                selectedSport,
-                selectedLevel,
-              ),
+              href: buildRaceHref(event.id, selectedYear, selectedMonth),
               isToday: event.date === today,
             }))}
           />

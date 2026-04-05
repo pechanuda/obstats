@@ -2,14 +2,14 @@
 
 Jednoduchá Next.js aplikace nad ORIS API pro:
 
-- výběr klubu, roku, měsíce, sportu a typu závodu
-- listing závodů s publikovanými výsledky
-- zobrazení reportu pro vybraný klub
+- listing závodů s publikovanými výsledky pro KOBUL
+- výběr roku a měsíce
+- zobrazení reportu pro KOBUL
 - export reportu do PDF
 
 ## Co aplikace dělá
 
-Aplikace načítá data přímo z ORIS API a pro vybraný klub zobrazuje:
+Aplikace načítá data přímo z ORIS API a pro KOBUL zobrazuje:
 
 - vítěze v kategorii
 - čas vítěze
@@ -21,7 +21,7 @@ V listingu jsou zobrazeny jen závody:
 
 - se stavem `R`
 - které nejsou `Dlouhodobé žebříčky`
-- kde má vybraný klub použitelné výsledky
+- kde má KOBUL použitelné výsledky
 
 ## Lokální spuštění
 
@@ -61,6 +61,7 @@ Na Vercelu je potřeba doplnit environment variables:
 
 - aplikace nepoužívá databázi
 - data se načítají přímo z ORIS API
+- klub, sport i typ závodu jsou v aplikaci natvrdo nastavené na `KOBUL`, `OB` a `Všechny závody`
 - PDF export používá samostatnou tiskovou route
 
 ## Zdroj dat
