@@ -21,7 +21,12 @@ html,
 body {
   margin: 0;
   padding: 0;
-  background: linear-gradient(180deg, #efe7d9 0%, var(--bg) 100%);
+  background:
+    linear-gradient(180deg, #244867 0%, #244867 32%, transparent 32%),
+    linear-gradient(144deg, transparent 0 37%, #4da0c3 37.2% 58%, transparent 58.2%),
+    linear-gradient(168deg, transparent 0 49%, #7e8f22 49.2% 68%, transparent 68.2%),
+    linear-gradient(168deg, transparent 0 63%, #275a5c 63.2% 100%),
+    linear-gradient(180deg, #244867 0%, #244867 33%, #4da0c3 33%, #4da0c3 50%, #7e8f22 50%, #7e8f22 66%, #275a5c 66%, #275a5c 100%);
   color: var(--text);
   font-family: Georgia, "Times New Roman", serif;
 }
@@ -42,6 +47,10 @@ a {
 
 .hero {
   margin-bottom: 18px;
+}
+
+.hero-card {
+  padding: 2px 2px 0;
 }
 
 .hero h1 {
@@ -68,6 +77,11 @@ a {
 }
 
 .filters {
+  padding: 16px;
+  margin-bottom: 16px;
+}
+
+.intro-panel {
   padding: 16px;
   margin-bottom: 16px;
 }
@@ -146,6 +160,11 @@ a {
 .summary {
   padding: 16px;
   margin-bottom: 16px;
+}
+
+.summary-inline {
+  padding: 0;
+  margin-bottom: 0;
 }
 
 .summary h2,

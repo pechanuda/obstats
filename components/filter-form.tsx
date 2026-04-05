@@ -29,7 +29,7 @@ export function FilterForm({
   submitLabel,
 }: FilterFormProps) {
   return (
-    <form className="panel filters" action={action}>
+    <form className="filters" action={action}>
       <div className="filters-grid filters-grid--compact">
         <div className="field">
           <label htmlFor="club">Klub</label>

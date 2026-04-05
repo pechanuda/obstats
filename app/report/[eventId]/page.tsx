@@ -69,24 +69,26 @@ export default async function ReportPage({
 
   return (
     <main className="page">
-      <section className="hero">
-        <h1>ORIS Report závodu</h1>
-        <p>Report vybraného závodu seskupený podle kategorií pro zvolený klub.</p>
-      </section>
+      <section className="panel intro-panel">
+        <section className="hero hero-card">
+          <h1>ORIS Report závodu</h1>
+          <p>Report vybraného závodu seskupený podle kategorií pro zvolený klub.</p>
+        </section>
 
-      <FilterForm
-        action={`/?${backParams.toString()}`}
-        clubs={clubs}
-        sports={sports}
-        levels={levels}
-        selectedClub={selectedClub}
-        selectedYear={selectedYear}
-        selectedMonth={selectedMonth}
-        selectedSport={selectedSport}
-        selectedLevel={selectedLevel}
-        years={yearOptions}
-        submitLabel="Zpět na filtrovaný seznam závodů"
-      />
+        <FilterForm
+          action={`/?${backParams.toString()}`}
+          clubs={clubs}
+          sports={sports}
+          levels={levels}
+          selectedClub={selectedClub}
+          selectedYear={selectedYear}
+          selectedMonth={selectedMonth}
+          selectedSport={selectedSport}
+          selectedLevel={selectedLevel}
+          years={yearOptions}
+          submitLabel="Zpět na filtrovaný seznam závodů"
+        />
+      </section>
 
       <ReportView
         report={report}

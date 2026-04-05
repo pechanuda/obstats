@@ -58,47 +58,49 @@ export default async function Page({
 
   return (
     <main className="page">
-      <section className="hero">
-        <h1>ORIS Report závodu</h1>
-        <p>
-          Procházej závody podle vybraného klubu a filtrů. Kliknutí na závod otevře
-          samostatnou stránku reportu se seskupenými výsledky kategorií a možností tisku do PDF.
-        </p>
-      </section>
+      <section className="panel intro-panel">
+        <section className="hero hero-card">
+          <h1>ORIS Report závodu</h1>
+          <p>
+            Procházej závody podle vybraného klubu a filtrů. Kliknutí na závod otevře
+            samostatnou stránku reportu se seskupenými výsledky kategorií a možností tisku do PDF.
+          </p>
+        </section>
 
-      <FilterForm
-        action="/"
-        clubs={clubs}
-        sports={sports}
-        levels={levels}
-        selectedClub={selectedClub}
-        selectedYear={selectedYear}
-        selectedMonth={selectedMonth}
-        selectedSport={selectedSport}
-        selectedLevel={selectedLevel}
-        years={yearOptions}
-        submitLabel="Načíst závody"
-      />
+        <FilterForm
+          action="/"
+          clubs={clubs}
+          sports={sports}
+          levels={levels}
+          selectedClub={selectedClub}
+          selectedYear={selectedYear}
+          selectedMonth={selectedMonth}
+          selectedSport={selectedSport}
+          selectedLevel={selectedLevel}
+          years={yearOptions}
+          submitLabel="Načíst závody"
+        />
 
-      <section className="panel summary">
-        <h2>Aktuální filtry</h2>
-        <p>
-          Klub: <strong>{selectedClubOption?.abbr ?? selectedClub}</strong>
-          {" · "}
-          Rok: <strong>{selectedYear}</strong>
-          {" · "}
-          Měsíc:{" "}
-          <strong>{monthOptions.find((item) => item.value === selectedMonth)?.label}</strong>
-          {" · "}
-          Sport: <strong>{selectedSportOption?.label ?? selectedSport}</strong>
-          {" · "}
-          Typ závodu: <strong>{selectedLevel === "all" ? "Všechny závody" : selectedLevel}</strong>
-          {" · "}
-          Nalezeno závodů: <strong>{events.length}</strong>
-        </p>
-        <p className="today-note">
-          Dnes: <strong>{today}</strong>
-        </p>
+        <section className="summary summary-inline">
+          <h2>Aktuální filtry</h2>
+          <p>
+            Klub: <strong>{selectedClubOption?.abbr ?? selectedClub}</strong>
+            {" · "}
+            Rok: <strong>{selectedYear}</strong>
+            {" · "}
+            Měsíc:{" "}
+            <strong>{monthOptions.find((item) => item.value === selectedMonth)?.label}</strong>
+            {" · "}
+            Sport: <strong>{selectedSportOption?.label ?? selectedSport}</strong>
+            {" · "}
+            Typ závodu: <strong>{selectedLevel === "all" ? "Všechny závody" : selectedLevel}</strong>
+            {" · "}
+            Nalezeno závodů: <strong>{events.length}</strong>
+          </p>
+          <p className="today-note">
+            Dnes: <strong>{today}</strong>
+          </p>
+        </section>
       </section>
 
       <section className="panel report">
