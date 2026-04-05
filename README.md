@@ -50,3 +50,10 @@ Projekt je standardní Next.js aplikace a může být nasazen přímo z GitHubu 
 - aplikace nepoužívá databázi
 - data se načítají přímo z ORIS API
 - PDF export používá samostatnou tiskovou route
+
+## Zdroj dat
+
+Data v aplikaci pocházejí z ORIS:
+
+- ORIS: https://oris.ceskyorientak.cz/
+- ORIS API: https://oris.ceskyorientak.cz/API?lang=cz
